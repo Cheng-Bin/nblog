@@ -20,21 +20,22 @@ User.prototype.save = function(callback) {
             return callback(err);
         }
 
-        db.connection('users', function(err, collection) {
+        db.collection('users', function(err, collection) {
             if (err) {
                 mongodb.close();
                 return callback(err);
             }
-        });
+    
 
-        collection.insert(user, {
-            safe: true
-        }, function(err, user) {
-            mongodb.close();
-            if (err) {
-                return callback(err);
-            }
-            callback(null, user[0]);
+            collection.insert(user, {
+                safe: true
+            }, function(err, user) {
+                mongodb.close();
+                if (err) {
+                    return callback(err);
+                }
+                callback(null, user[0]);
+            });
         });
     });
 };
